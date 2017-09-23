@@ -6,9 +6,15 @@ use App\Models\Admin;
 
 class TestController extends Controller
 {
-    public function test()
+    public function get_wheat()
     {
-        $result = Admin::get_user();
-        dump($result);
+        $result = Admin::get_wheat();
+        /*foreach ($result as $key => $val){
+            $array = explode(',',$val->child);
+            for ($i = 0;$i<count($array)-1;$i++){
+                dump($array[$i]);
+            }
+        }*/
+        return $result ? responseToJson(0,'success',$result) : responseToJson(1,'error','未查询到结果');
     }
 }

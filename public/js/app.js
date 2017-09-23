@@ -1374,9 +1374,9 @@ window._ = __webpack_require__(40);
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(42);
+    window.$ = window.jQuery = __webpack_require__(42);
 
-  __webpack_require__(43);
+    __webpack_require__(43);
 } catch (e) {}
 
 /**
@@ -1403,8 +1403,8 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }*/
 window.axios.defaults.headers.common = {
-  'X-CSRF-TOKEN': document.querySelector('meta[name="X-CSRF-TOKEN"]').content,
-  'X-Requested-With': 'XMLHttpRequest'
+    'X-CSRF-TOKEN': document.querySelector('meta[name="X-CSRF-TOKEN"]').content,
+    'X-Requested-With': 'XMLHttpRequest'
 };
 
 /**
@@ -32494,7 +32494,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
     saveScrollPosition: true,
     routes: [{
         name: "index",
-        path: '/',
+        path: '/home',
         component: function component(resolve) {
             return void __webpack_require__.e/* require */(0).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(123)]; (resolve.apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
         }

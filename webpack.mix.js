@@ -15,6 +15,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .extract(['vue', 'element-ui', 'vue-router'])
     .sass('resources/assets/sass/admin.scss', 'public/css')
     mix.copy('resources/assets/img/', 'public/img/');
+    mix.copy('resources/assets/js/springy', 'public/js/springy/');
 if (mix.config.inProduction) {
     mix.version();
     mix.disableNotifications();

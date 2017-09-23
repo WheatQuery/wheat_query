@@ -74,7 +74,7 @@ exports = module.exports = __webpack_require__(8)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -96,76 +96,126 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            form: {
-                name: '',
-                region: '',
-                date1: '',
-                date2: '',
-                delivery: false,
-                type: [],
-                resource: '',
-                desc: ''
-            }
+            list: []
         };
     },
 
     computed: {},
     methods: {
-        onSubmit: function onSubmit() {
-            console.log('submit!');
+        get_wheat: function get_wheat() {
+            var _this = this;
+
+            axios.post('/get', {}).then(function (res) {
+                if (res.data.code == 0) {
+                    _this.list = res.data.result;
+                    _this.test();
+                }
+            });
+        },
+
+        //判断是否节点已经存在
+        exist: function exist(nodes, node) {
+            for (var i in nodes) {
+                if (nodes[i].data.label == node) {
+                    return true;
+                }
+            }
+            return false;
+        },
+        str_split: function str_split(str) {
+
+            return arr;
+        },
+        test: function test() {
+            var self = this;
+            console.log(self.list);
+            //setTimeout(function () {
+            /*var graph = new Springy.Graph();
+            graph.addNodes('A', 'B', 'C', 'D', 'E','F', 'G', 'H', 'I')
+             graph.addEdges(
+                ['A', 'B', {color: '#00A0B0', label: 'Foo bar'}],
+                ['A', 'C', {color: '#CC333F'}],
+                ['C', 'D', {color: '#EB6841'}],
+                ['A', 'E', {color: '#EDC951'}],
+                ['F', 'G', {color: '#7DBE3C'}],
+                ['F', 'H', {color: '#BE7D3C'}],
+                ['G', 'H'],
+                ['F', 'I'],
+                ['G', 'I', {color: '#6A4A3C'}]
+            );
+            jQuery(function(){
+                var springy = jQuery('#springydemo').springy({
+                    graph: graph,
+                    nodeSelected: function(node){
+                        console.log(graph,node)
+                        console.log('Node selected: ' + JSON.stringify(node.data));
+                    }
+                });
+             });*/
+            //},0)
+            var graph = new Springy.Graph();
+            var line = [];
+            /*var dennis = graph.newNode({
+                label: 'Dennis',
+                ondoubleclick: function() { console.log("Hello!"); }
+            });*/
+
+            for (var i in this.list) {
+                /*if(!exist(graph.nodes,this.list[i].name)){
+                    graph.addNodes(this.list[i].name)
+                }*/
+                graph.addNodes(this.list[i].name);
+            }
+
+            for (var _i in this.list) {
+                if (this.list[_i].child != '') {
+                    var _arr = new Array();
+                    _arr = this.list[_i].child.split(',');
+                    for (var j = 0; j < _arr.length - 1; j++) {
+                        line.push([_arr[j], this.list[_i].name]);
+                    }
+                }
+            }
+            //graph.addEdges(line)
+            for (var k in line) {
+                graph.addEdges(line[k]);
+                //console.log(line[k])
+            }
+            /*var michael = graph.newNode({label: 'Michael'});
+            var jessica = graph.newNode({label: 'Jessica'});
+            var timothy = graph.newNode({label: 'Timothy'});
+            var barbara = graph.newNode({label: 'Barbara'});
+            var franklin = graph.newNode({label: 'Franklin'});
+            var monty = graph.newNode({label: 'Monty'});
+            var james = graph.newNode({label: 'James'});
+            var bianca = graph.newNode({label: 'Bianca'});
+             graph.newEdge(dennis, michael, {color: '#00A0B0'});
+            graph.newEdge(michael, dennis, {color: '#6A4A3C'});
+            graph.newEdge(michael, jessica, {color: '#CC333F'});
+            graph.newEdge(jessica, barbara, {color: '#EB6841'});
+            graph.newEdge(michael, timothy, {color: '#EDC951'});
+            graph.newEdge(franklin, monty, {color: '#7DBE3C'});
+            graph.newEdge(dennis, monty, {color: '#000000'});
+            graph.newEdge(monty, james, {color: '#00A0B0'});
+            graph.newEdge(barbara, timothy, {color: '#6A4A3C'});
+            graph.newEdge(dennis, bianca, {color: '#CC333F'});
+            graph.newEdge(bianca, monty, {color: '#EB6841'});*/
+
+            jQuery(function () {
+                var springy = window.springy = jQuery('#springydemo').springy({
+                    graph: graph,
+                    nodeSelected: function nodeSelected(node) {
+                        console.log('Node selected: ' + JSON.stringify(node.data));
+                    }
+                });
+            });
         }
     },
-    mounted: function mounted() {
-        console.log(this.data);
-    }
+    mounted: function mounted() {}
 });
 
 /***/ }),
@@ -174,187 +224,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_vm._v("\n    this is vue component!"), _c('br'), _vm._v(" "), _c('div', [_c('el-form', {
-    ref: "form",
+  return _c('div', [_c('canvas', {
     attrs: {
-      "model": _vm.form,
-      "label-width": "80px"
+      "id": "springydemo",
+      "width": "640",
+      "height": "480"
     }
-  }, [_c('el-form-item', {
+  }), _vm._v(" "), _c('remote-script', {
     attrs: {
-      "label": "活动名称"
-    }
-  }, [_c('el-input', {
-    model: {
-      value: (_vm.form.name),
-      callback: function($$v) {
-        _vm.form.name = $$v
-      },
-      expression: "form.name"
-    }
-  })], 1), _vm._v(" "), _c('el-form-item', {
-    attrs: {
-      "label": "活动区域"
-    }
-  }, [_c('el-select', {
-    attrs: {
-      "placeholder": "请选择活动区域"
-    },
-    model: {
-      value: (_vm.form.region),
-      callback: function($$v) {
-        _vm.form.region = $$v
-      },
-      expression: "form.region"
-    }
-  }, [_c('el-option', {
-    attrs: {
-      "label": "区域一",
-      "value": "shanghai"
-    }
-  }), _vm._v(" "), _c('el-option', {
-    attrs: {
-      "label": "区域二",
-      "value": "beijing"
-    }
-  })], 1)], 1), _vm._v(" "), _c('el-form-item', {
-    attrs: {
-      "label": "活动时间"
-    }
-  }, [_c('el-col', {
-    attrs: {
-      "span": 11
-    }
-  }, [_c('el-date-picker', {
-    staticStyle: {
-      "width": "100%"
-    },
-    attrs: {
-      "type": "date",
-      "placeholder": "选择日期"
-    },
-    model: {
-      value: (_vm.form.date1),
-      callback: function($$v) {
-        _vm.form.date1 = $$v
-      },
-      expression: "form.date1"
-    }
-  })], 1), _vm._v(" "), _c('el-col', {
-    staticClass: "line",
-    attrs: {
-      "span": 2
-    }
-  }, [_vm._v("-")]), _vm._v(" "), _c('el-col', {
-    attrs: {
-      "span": 11
-    }
-  }, [_c('el-time-picker', {
-    staticStyle: {
-      "width": "100%"
-    },
-    attrs: {
-      "type": "fixed-time",
-      "placeholder": "选择时间"
-    },
-    model: {
-      value: (_vm.form.date2),
-      callback: function($$v) {
-        _vm.form.date2 = $$v
-      },
-      expression: "form.date2"
-    }
-  })], 1)], 1), _vm._v(" "), _c('el-form-item', {
-    attrs: {
-      "label": "即时配送"
-    }
-  }, [_c('el-switch', {
-    attrs: {
-      "on-text": "",
-      "off-text": ""
-    },
-    model: {
-      value: (_vm.form.delivery),
-      callback: function($$v) {
-        _vm.form.delivery = $$v
-      },
-      expression: "form.delivery"
-    }
-  })], 1), _vm._v(" "), _c('el-form-item', {
-    attrs: {
-      "label": "活动性质"
-    }
-  }, [_c('el-checkbox-group', {
-    model: {
-      value: (_vm.form.type),
-      callback: function($$v) {
-        _vm.form.type = $$v
-      },
-      expression: "form.type"
-    }
-  }, [_c('el-checkbox', {
-    attrs: {
-      "label": "美食/餐厅线上活动",
-      "name": "type"
-    }
-  }), _vm._v(" "), _c('el-checkbox', {
-    attrs: {
-      "label": "地推活动",
-      "name": "type"
-    }
-  }), _vm._v(" "), _c('el-checkbox', {
-    attrs: {
-      "label": "线下主题活动",
-      "name": "type"
-    }
-  }), _vm._v(" "), _c('el-checkbox', {
-    attrs: {
-      "label": "单纯品牌曝光",
-      "name": "type"
-    }
-  })], 1)], 1), _vm._v(" "), _c('el-form-item', {
-    attrs: {
-      "label": "特殊资源"
-    }
-  }, [_c('el-radio-group', {
-    model: {
-      value: (_vm.form.resource),
-      callback: function($$v) {
-        _vm.form.resource = $$v
-      },
-      expression: "form.resource"
-    }
-  }, [_c('el-radio', {
-    attrs: {
-      "label": "线上品牌商赞助"
-    }
-  }), _vm._v(" "), _c('el-radio', {
-    attrs: {
-      "label": "线下场地免费"
-    }
-  })], 1)], 1), _vm._v(" "), _c('el-form-item', {
-    attrs: {
-      "label": "活动形式"
-    }
-  }, [_c('el-input', {
-    attrs: {
-      "type": "textarea"
-    },
-    model: {
-      value: (_vm.form.desc),
-      callback: function($$v) {
-        _vm.form.desc = $$v
-      },
-      expression: "form.desc"
-    }
-  })], 1), _vm._v(" "), _c('el-form-item', [_c('el-button', {
-    attrs: {
-      "type": "primary"
+      "name": "js",
+      "src": "/js/springy/springy.js"
     },
     on: {
-      "click": _vm.onSubmit
+      "load": _vm.get_wheat
     }
-  }, [_vm._v("立即创建")]), _vm._v(" "), _c('el-button', [_vm._v("取消")])], 1)], 1)], 1)])
+  }), _vm._v(" "), _c('remote-script', {
+    attrs: {
+      "name": "js",
+      "src": "/js/springy/springyui.js"
+    }
+  })], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

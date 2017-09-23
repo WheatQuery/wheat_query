@@ -4,9 +4,9 @@ namespace app\Models;
 use DB;
 class Admin
 {
-    public static function get_user()
+    public static function get_wheat()
     {
-        $user = DB::table('user')->get();
-        return !$user->isEmpty() ? $user : 0;
+        $result = DB::table('wheat')->get();
+        return !$result->isEmpty() ? $result : 0;
     }
 }
