@@ -13,7 +13,6 @@
         data(){
             return {
                 list: [],
-                on_loading:true
             }
         },
         computed: {},
