@@ -5,8 +5,7 @@
                 <td class="sidebar" style="width: 200px;" id="navleft">
                     <div style="background-color:#2F4050;height: 100%;width: 200px;">
                         <div class="logo">
-                            test<br>
-                            test1
+                            小麦品种查询系统
                         </div>
                         <div class="user">
                             <img :src="user.avatar">

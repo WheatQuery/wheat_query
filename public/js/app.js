@@ -32365,7 +32365,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -32422,7 +32421,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "height": "100%",
       "width": "200px"
     }
-  }, [_vm._m(0), _vm._v(" "), _c('div', {
+  }, [_c('div', {
+    staticClass: "logo"
+  }, [_vm._v("\n                        小麦品种查询系统\n                    ")]), _vm._v(" "), _c('div', {
     staticClass: "user"
   }, [_c('img', {
     attrs: {
@@ -32446,7 +32447,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "ion-ios-folder"
-  }), _vm._v("管理")])], 1)]), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), _c('td', {
+  }), _vm._v("管理")])], 1)]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c('td', {
     staticStyle: {
       "background-color": "#EEEEEE",
       "height": "100%"
@@ -32456,10 +32457,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('router-view')], 1)])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "logo"
-  }, [_vm._v("\n                        test"), _c('br'), _vm._v("\n                        test1\n                    ")])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "logout"
   }, [_c('a', {
