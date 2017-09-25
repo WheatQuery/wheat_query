@@ -47,6 +47,16 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
+        'import' => [
+
+            'driver' => 'local',
+
+            // 文件将上传到storage/app/uploads目录
+            'root' => storage_path('app/import'),
+
+            // 文件将上传到public/uploads目录 如果需要浏览器直接访问 请设置成这个
+            //'root' => public_path('uploads'),
+        ],
 
         'public' => [
             'driver' => 'local',

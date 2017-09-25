@@ -1,6 +1,6 @@
 <template>
     <div>
-        <canvas id="springydemo" width="640" height="480" />
+        <canvas id="springydemo" width="1100" height="550" />
         <remote-script name="js" src="/js/springy/springy.js" @load="get_wheat"></remote-script>
         <remote-script name="js" src="/js/springy/springyui.js"></remote-script>
     </div>
@@ -120,6 +120,7 @@
                     var springy = window.springy = jQuery('#springydemo').springy({
                         graph: graph,
                         nodeSelected: function(node){
+                            console.log(node.data.href)
                             console.log('Node selected: ' + JSON.stringify(node.data));
                         }
                     });

@@ -9,4 +9,9 @@ class Admin
         $result = DB::table('wheat')->get();
         return !$result->isEmpty() ? $result : 0;
     }
+    public static function wheat_import($array)
+    {
+        $result = DB::table('wheat')->insert($array);
+        return $result ? $result : 0;
+    }
 }

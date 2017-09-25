@@ -14,12 +14,21 @@
                             </span>
                         </div>
                         <ul class="menu">
-                            <li class="active">
+                            <!--<li class="active">
                                 <router-link to="home"><i class="ion-ios-grid-view"></i>查询</router-link>
                             </li>
                             <li>
                                 <router-link to="admin"><i class="ion-ios-folder"></i>管理</router-link>
-                            </li>
+                            </li>-->
+                            <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" theme="dark" @close="handleClose">
+                                <router-link class="link-a" to="/"><el-menu-item index="3"><i class="el-icon-menu"></i>查询</el-menu-item></router-link>
+                                <el-submenu index="1">
+                                    <template slot="title"><i class="el-icon-setting"></i>管理</template>
+                                    <router-link class="link-a" to="/import"><el-menu-item index="1-1">导入</el-menu-item></router-link>
+                                    <router-link class="link-a" to="/add"><el-menu-item index="1-2">添加</el-menu-item></router-link>
+                                    <router-link class="link-a" to="/query"><el-menu-item index="1-3">查看</el-menu-item></router-link>
+                                </el-submenu>
+                            </el-menu>
                         </ul>
                         <div class="logout">
                             <a href="/logout"><i class="ion-log-out"></i>&nbsp;退出</a>
@@ -40,12 +49,16 @@
     img {
         max-width: 100%;
     }
+     .el-menu-vertical-demo:not(.el-menu--collapse) {
+         width: 200px;
+         min-height: 400px;
+     }
 </style>
 <style scoped>
     .user {
         text-align: center;
-        padding: 30px 0;
-        height: 185px;
+        padding: 20px 0;
+        height: 150px;
         overflow: hidden;
     }
 
@@ -73,7 +86,7 @@
 
     .logo {
         background: url('/img/admin/logo-bg.png');
-        height: 100px;
+        height: 70px;
         color: white;
         font-weight: bolder;
         text-align: center;
@@ -145,6 +158,9 @@
     div.logout > a:hover, .info:hover {
         background-color: #1b6d85;
     }
+    .link-a{
+        text-decoration: none;
+    }
 </style>
 <script type="text/ecmascript-6">
     export default {
@@ -154,10 +170,17 @@
                     name:'username',
                     avarar:''
                 }],
+                isCollapse: false
             }
         },
         computed: {},
         methods: {
+            handleOpen(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            handleClose(key, keyPath) {
+                console.log(key, keyPath);
+            },
             get () {
                 /*var self = this
                 axios.post('info/get', {}).then(function (response) {

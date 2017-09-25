@@ -7,8 +7,13 @@ export default new VueRouter({
     routes: [
         {
             name: "index",
-            path: '/home',
+            path: '/',
             component: resolve =>void(require(['./Home.vue'], resolve))
+        },
+        {
+            name: "import",
+            path: '/import',
+            component: resolve =>void(require(['./admin/Import.vue'], resolve))
         },
     ]
 })
