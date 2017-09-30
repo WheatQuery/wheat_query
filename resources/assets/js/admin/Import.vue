@@ -3,7 +3,7 @@
         <div class="path">
             <span><i class="el-icon-setting path-icon"></i> <span class="path-label">管理</span> / </span><span>导入</span>
         </div>
-        <div class="upload">
+        <div class="upload" v-loading="import_loading">
             <el-upload
                     class="upload-demo"
                     drag
@@ -61,6 +61,7 @@
     export default {
         data() {
             return {
+                import_loading: false,
                 csrf_token: {
                     _token: Laravel.csrfToken
                 },
@@ -68,29 +69,27 @@
         },
         methods:{
             before_upload(file) {
-                console.log(file)
+                //console.log(file)
             },
             handleSuccess: function(data) {
                 var self = this;
-                if (data.result.error == 0) {
-                    this.$message({
-                        message: "成功导入"+data.result.success+"条记录",
+                self.import_loading = true
+                if (data.result.code == 0) {
+                    self.$message({
+                        message: "成功导入"+data.result.count+"条记录",
                         type: "success"
                     });
                     setTimeout(function(){
                         location.href="/#/user/student";
                     },2000);
-                    self.error_bool = false;
                 } else {
-                    this.$message({
-                        message: "成功导入"+data.result.success+"条记录,失败"+data.result.error+"条记录",
+                    self.$message({
+                        message: "成功导入"+data.result.count+"条记录,失败"+data.result.error.length+"条记录",
                         type: "warning"
                     });
                     self.source = data.result.error_data;
-                    self.error_bool = true;
                 }
-                this.loading = false;
-                console.log(data)
+                this.import_loading = false;
             },
             error() {
 
