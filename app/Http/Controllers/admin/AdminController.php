@@ -9,9 +9,18 @@ use Excel;
 
 class AdminController extends Controller
 {
-    public function get_wheat()
+    /**
+     * 查询小麦品种
+     * $num 分页，每页数量向
+     * $page 当前页数
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function get_wheat(Request $request)
     {
-        $result = Admin::get_wheat();
+        $num = $request->num;
+        $page = $request->page;
+        $result = Admin::get_wheat($num,$page);
         return $result ? responseToJson(0, 'success', $result) : responseToJson(1, 'error', '未查询到结果');
     }
 
@@ -103,10 +112,10 @@ class AdminController extends Controller
         foreach ($data as $key => $value) {
             if ($value['原名'] != null && $value['品种来源每个品种之间用英文分割开'] != null) {
                 try {
-                    $insert[$key]['wheat']['name'] = $value['原名'] == null ? '' : $value['原名'];
-                    $insert[$key]['wheat']['child'] = $value['品种来源每个品种之间用英文分割开'] == null ? '' : $value['品种来源每个品种之间用英文分割开'];
+                    $insert[$key]['wheat']['name'] = $value['原名'];
+                    $insert[$key]['wheat']['child'] = $value['品种来源每个品种之间用英文分割开'];
                     $insert[$key]['wheat']['verify_time'] = $value['审定年份'] == null ? '' : strtotime($value['审定年份']);
-                    $insert[$key]['wheat']['use_times'] = $value['利用次数'] == null ? '' : $value['利用次数'];
+                    $insert[$key]['wheat']['use_times'] = $value['利用次数'] == null ? 0 : $value['利用次数'];
                     $insert[$key]['wheat']['code'] = $value['审定编号'] == null ? '' : $value['审定编号'];
                     $insert[$key]['wheat']['place'] = $value['申请单位'] == null ? '' : $value['申请单位'];
                     $insert[$key]['wheat']['breeder'] = $value['育种者'] == null ? '' : $value['育种者'];
@@ -124,22 +133,22 @@ class AdminController extends Controller
                     $insert[$key]['attr']['panicle_type'] = $value['穗型'] == null ? '' : $value['穗型'];
                     $insert[$key]['attr']['root_activ'] = $value['根系活力'] == null ? '' : $value['根系活力'];
                     $insert[$key]['attr']['yellow'] = $value['落黄'] == null ? '' : $value['落黄'];
-                    $insert[$key]['attr']['panicle_num'] = $value['母穗数'] == null ? '' : $value['母穗数'];
-                    $insert[$key]['attr']['grain_num'] = $value['穗粒数'] == null ? '' : $value['穗粒数'];
-                    $insert[$key]['attr']['ths_weight'] = $value['千粒重'] == null ? '' : $value['千粒重'];
+                    $insert[$key]['attr']['panicle_num'] = $value['母穗数'] == null ? 0 : $value['母穗数'];
+                    $insert[$key]['attr']['grain_num'] = $value['穗粒数'] == null ? 0 : $value['穗粒数'];
+                    $insert[$key]['attr']['ths_weight'] = $value['千粒重'] == null ? 0 : $value['千粒重'];
                     $insert[$key]['attr']['resistance'] = $value['抗病性'] == null ? '' : $value['抗病性'];
-                    $insert[$key]['attr']['protein'] = $value['蛋白质含量'] == null ? '' : $value['蛋白质含量'];
-                    $insert[$key]['attr']['volume'] = $value['容重'] == null ? '' : $value['容重'];
-                    $insert[$key]['attr']['wet_gluten'] = $value['湿面筋含量'] == null ? '' : $value['湿面筋含量'];
-                    $insert[$key]['attr']['fall_num'] = $value['降落数值'] == null ? '' : $value['降落数值'];
-                    $insert[$key]['attr']['precipitate'] = $value['沉淀指数'] == null ? '' : $value['沉淀指数'];
-                    $insert[$key]['attr']['water_uptake'] = $value['吸水量'] == null ? '' : $value['吸水量'];
-                    $insert[$key]['attr']['format_time'] = $value['形成时间'] == null ? '' : $value['形成时间'];
-                    $insert[$key]['attr']['steady_time'] = $value['稳定时间'] == null ? '' : $value['稳定时间'];
-                    $insert[$key]['attr']['weaken'] = $value['弱化度'] == null ? '' : $value['弱化度'];
-                    $insert[$key]['attr']['hardness'] = $value['硬度'] == null ? '' : $value['硬度'];
-                    $insert[$key]['attr']['white'] = $value['白度'] == null ? '' : $value['白度'];
-                    $insert[$key]['attr']['powder'] = $value['出粉率'] == null ? '' : $value['出粉率'];
+                    $insert[$key]['attr']['protein'] = $value['蛋白质含量'] == null ? 0 : $value['蛋白质含量'];
+                    $insert[$key]['attr']['volume'] = $value['容重'] == null ? 0 : $value['容重'];
+                    $insert[$key]['attr']['wet_gluten'] = $value['湿面筋含量'] == null ? 0 : $value['湿面筋含量'];
+                    $insert[$key]['attr']['fall_num'] = $value['降落数值'] == null ? 0 : $value['降落数值'];
+                    $insert[$key]['attr']['precipitate'] = $value['沉淀指数'] == null ? 0 : $value['沉淀指数'];
+                    $insert[$key]['attr']['water_uptake'] = $value['吸水量'] == null ? 0 : $value['吸水量'];
+                    $insert[$key]['attr']['format_time'] = $value['形成时间'] == null ? 0 : $value['形成时间'];
+                    $insert[$key]['attr']['steady_time'] = $value['稳定时间'] == null ? 0 : $value['稳定时间'];
+                    $insert[$key]['attr']['weaken'] = $value['弱化度'] == null ? 0 : $value['弱化度'];
+                    $insert[$key]['attr']['hardness'] = $value['硬度'] == null ? 0 : $value['硬度'];
+                    $insert[$key]['attr']['white'] = $value['白度'] == null ? 0 : $value['白度'];
+                    $insert[$key]['attr']['powder'] = $value['出粉率'] == null ? 0 : $value['出粉率'];
                     $insert[$key]['attr']['yield_result'] = $value['产量表现'] == null ? '' : $value['产量表现'];
                     $insert[$key]['attr']['tech_point'] = $value['栽培技术要点'] == null ? '' : $value['栽培技术要点'];
                 } catch (\Exception $e) {

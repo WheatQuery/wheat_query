@@ -1,6 +1,17 @@
 <template>
-    <div v-loading="get_wheat_loading">
-        <canvas id="springydemo" width="1100" height="550" />
+    <div id="home" v-loading="get_wheat_loading">
+        <canvas id="springydemo" width="1150" height="1000" />
+        <div class="page">
+            <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-sizes="[10, 15, 20, 30, 40]"
+                    :page-size="100"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="total">
+            </el-pagination>
+        </div>
         <remote-script name="js" src="/js/springy/springy.js" @load="get_wheat"></remote-script>
         <remote-script name="js" src="/js/springy/springyui.js"></remote-script>
         <div><!--小麦品种详情弹出框-->
@@ -51,8 +62,8 @@
                     </div>
                 </div>
                 <span slot="footer" class="dialog-footer">
-                    <el-button @click="wheatVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="wheatVisible = false">确 定</el-button>
+                    <el-button @click="wheatVisible = false"> 关 闭 </el-button>
+                    <!--<el-button type="primary" @click="wheatVisible = false">确 定</el-button>-->
                 </span>
             </el-dialog>
         </div>
@@ -69,12 +80,19 @@
     .nature{
         margin-left: 20px;
     }
+    .page{
+        padding: 20px 0 50px 50px;
+        background: white;
+    }
 </style>
 <script type="text/ecmascript-6">
     export default {
         data(){
             return {
+                currentPage: 1,     //当前页
+                pageNum:10,     //每页条数
                 list: [],
+                total: 0,   //下麦总数
                 wheatVisible: false,
                 details: {wheat:'',nature:''},
                 get_wheat_loading: false,
@@ -83,11 +101,22 @@
         },
         computed: {},
         methods: {
+            handleSizeChange(val) {
+                this.pageNum = val
+                this.get_wheat()
+                //console.log(`每页 ${val} 条`);
+            },
+            handleCurrentChange(val) {
+                this.currentPage = val
+                this.get_wheat()
+                //console.log(`当前页: ${val}`);
+            },
             get_wheat(){
                 this.get_wheat_loading = true
-                axios.post('/get',{}).then(res=> {
+                axios.post('/get',{num:((this.currentPage-1)*this.pageNum),page:this.pageNum}).then(res=> {
                     if(res.data.code == 0){
-                        this.list = res.data.result
+                        this.list = res.data.result['wheat']
+                        this.total = res.data.result['count']
                         this.query_all()
                     }
                     this.get_wheat_loading = false
@@ -138,6 +167,10 @@
                     label: 'Dennis',
                     ondoubleclick: function() { console.log("Hello!"); }
                 });*/
+
+                //添加一个canvas标签
+                $('#springydemo').remove()
+                $('.page').before('<canvas id="springydemo" width="1150" height="1000" />')
                 //开始画节点，包括连线
                 var graph = new Springy.Graph();
                 let line = []
@@ -182,13 +215,12 @@
                 graph.newEdge(barbara, timothy, {color: '#6A4A3C'});
                 graph.newEdge(dennis, bianca, {color: '#CC333F'});
                 graph.newEdge(bianca, monty, {color: '#EB6841'});*/
-
                 jQuery(function(){
                     var springy = window.springy = jQuery('#springydemo').springy({
                         graph: graph,
                         nodeSelected: function(node){
-                            console.log(node.data.label)
                             self.wheat_detail(node.data.label)
+                            console.log(node.data.label)
                         }
                     });
                 });
@@ -206,7 +238,6 @@
                         }else{
                             this.details = res.data.result
                             this.wheatVisible = true
-                            console.log(this.details)
                         }
                     }else{
                         this.$message({

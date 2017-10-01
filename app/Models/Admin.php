@@ -8,10 +8,13 @@ class Admin
      * 查询所有小麦品种
      * @return int
      */
-    public static function get_wheat()
+    public static function get_wheat($num,$page)
     {
-        $result = DB::table('wheat')->get();
-        return !$result->isEmpty() ? $result : 0;
+        $result = DB::table('wheat')->offset($num)->limit($page)->get();
+        $count = DB::table('wheat')->count();
+        $data['wheat'] = $result;
+        $data['count'] = $count;
+        return !$result->isEmpty() ? $data : 0;
     }
 
     /**
