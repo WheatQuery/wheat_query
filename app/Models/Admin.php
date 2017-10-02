@@ -55,6 +55,27 @@ class Admin
     }
 
     /**
+     * 统计每个小麦品种被利用的次数
+     *
+     */
+    public static function get_times()
+    {
+        $wheat = DB::table('wheat')->select('id','name','child')->get();
+        foreach ($wheat as $key1 => $value1){
+            $count = 0;
+            foreach ($wheat as $key2 => $value2){
+                if($value2->child != ''){
+                    if(strpos($value1->name,$value2->child) !== false){
+                        $count++;
+                    }
+                }
+            }
+            //统计数据中小麦品种出现的次数
+            $result = DB::table('wheat')->where('id','=',$value1->id)->update(['use_times'=>$count]);
+            dump($result);
+        }
+    }
+    /**
      * 查询单个小麦品种的详情信息
      * @param $name
      * @return array|int
