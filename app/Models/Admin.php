@@ -10,8 +10,8 @@ class Admin
      */
     public static function get_wheat($num,$page)
     {
-        $result = DB::table('wheat')->offset($num)->limit($page)->get();
-        $count = DB::table('wheat')->count();
+        $result = DB::table('wheat')->where('is_delete',0)->offset($num)->limit($page)->get();
+        $count = DB::table('wheat')->where('is_delete',0)->count();
         $data['wheat'] = $result;
         $data['count'] = $count;
         return !$result->isEmpty() ? $data : 0;
@@ -92,5 +92,33 @@ class Admin
         }else{
             return 0;
         }
+    }
+
+    /**
+     * 搜索小麦品种
+     * @param $value
+     * @return int
+     */
+    public static function search($value)
+    {
+        $result = DB::table('wheat')->where('name','like','%'.$value.'%')->orWhere('child','like','%'.$value.'%')->get();
+        return !$result->isEmpty() ? $result : 0;
+    }
+
+    /**
+     * 批量删除小麦
+     * @param $wheat_id 小麦id数组
+     * @return int
+     */
+    public static function batch_delete($wheat_id)
+    {
+        $time = time();
+        $result = DB::table('wheat')->whereIn('id',$wheat_id)->update([
+            'update_time'=> $time,
+            'update_user_id'=>get_session_user_id(),
+            'is_delete'=> 1,
+            'delete_at'=>$time
+        ]);
+        return $result ? 1 : 0;
     }
 }

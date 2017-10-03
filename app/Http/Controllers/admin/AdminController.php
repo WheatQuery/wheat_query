@@ -176,6 +176,28 @@ class AdminController extends Controller
         $result = Admin::detail($name);
         return $result ? responseToJson(0,'success',$result) : responseToJson(1,'error','没有查询到信息');
     }
+
+    /**
+     * 搜索小麦品种
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search(Request $request)
+    {
+        $value = $request->value;
+        $result = Admin::search($value);
+        return $result ? responseToJson(0,'success',$result) : responseToJson(1,'error','没有查询结果');
+    }
+
+    /**
+     * 批量删除小麦品种
+     */
+    public function batch_delete(Request $request)
+    {
+        $wheat_id = $request->id;
+        $result = Admin::batch_delete($wheat_id);
+        return $request ? responseToJson(0,'success','删除成功！') : responseToJson(1,'error','删除失败!');
+    }
     public function test()
     {
         /*$str1 = '[\u4E00-\u9FA5A-Za-z0-9()_-x/]+[,]+$';

@@ -6,13 +6,15 @@
         <div class="content" v-loading="query_loading">
             <div class="content-head">
                 <div class="but">
-                    <el-button type="primary" :disabled="true">已选 5 / 23 | 批量删除</el-button>
+                    <el-button type="primary" :disabled="button_click" @click="batch_del">已选 {{ selectVal.length }} / {{ tableData.length }} | 批量删除</el-button>
                 </div>
                 <div class="search-input">
                     <el-input
                             placeholder="请输入小麦名称"
                             icon="search"
                             v-model="searchVal"
+                            @keyup.enter.native="search"
+                            @change="searchChange"
                             :on-icon-click="search">
                     </el-input>
                 </div>
@@ -85,7 +87,7 @@
                         </el-table>
                     </template>
                 </template>
-                <div class="page">
+                <div class="page" v-if="showPage">
                     <el-pagination
                             @size-change="handleSizeChange"
                             @current-change="handleCurrentChange"
@@ -143,11 +145,14 @@
         data() {
             return {
                 query_loading: false,
+                button_click: true,
                 currentPage: 1,     //当前页数
                 pageNum: 10,
                 total: 0,     //总数
                 searchVal: '',      //搜索框的值
-                tableData: []
+                tableData: [],
+                showPage: true,
+                selectVal:[],       //批量选中的小麦品种
             }
         },
         methods:{
@@ -157,9 +162,9 @@
                     if(res.data.code == 0){
                         this.tableData = res.data.result['wheat']
                         this.total = res.data.result['count']
-                        console.log(this.tableData)
                     }
                     this.query_loading= false
+                    this.showPage = true
                 })
             },
             handleSizeChange(val) {
@@ -173,16 +178,73 @@
                 //console.log(`当前页: ${val}`);
             },
             selectChange(value) {
-                console.log(value)
+                if(value.length != 0){
+                    this.button_click = false
+                }else{
+                    this.button_click = true
+                }
+                this.selectVal = value
             },
             search() {
                 console.log(this.searchVal)
+                axios.post('/search',{value:this.searchVal}).then( res => {
+                    if(res.data.code == 0){
+                        this.tableData = res.data.result
+                    }else{
+                        this.tableData = []
+                    }
+                    this.showPage = false
+                })
+            },
+            searchChange() {
+                if(this.searchVal == ''){
+                    this.get()
+                }
+            },
+            batch_del() {
+                let wheat_id = []
+                for (let i in this.selectVal){
+                    wheat_id[i] = this.selectVal[i].id
+                }
+                this.$confirm('是否要删除选中的小麦品种?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axios.post('/batch_delete',{id:wheat_id}).then( res => {
+                        this.$message({
+                            type: res.data.msg,
+                            message: res.data.result
+                        });
+                        if(res.data.code == 0){
+                            this.get()
+                        }
+                    })
+                }).catch(() => {
+                })
             },
             handleEdit(index, row) {
-                console.log(index, row);
+                console.log(index, row)
             },
             handleDelete(index, row) {
-                console.log(index, row);
+                this.$confirm('是否要删除该小麦品种?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    let wheat_id = []
+                    wheat_id.push(row.id)
+                    axios.post('/batch_delete',{id:wheat_id}).then( res => {
+                        this.$message({
+                            type: res.data.msg,
+                            message: res.data.result
+                        });
+                        if(res.data.code == 0){
+                            this.get()
+                        }
+                    })
+                }).catch(() => {
+                });
             },
         },
         mounted() {
