@@ -13,5 +13,16 @@
 
 Route::get('/', function () {
     return view('index');
-});
+})->middleware('certification');
 include('admin.php');
+
+Route::get('/login',function (){
+    return view('auth\login');
+});
+
+Route::post('/logining','login\LoginController@logining');
+Route::get('/logout','login\LoginController@logout');
+Route::post('/adds','admin\WheatController@add');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

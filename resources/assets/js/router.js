@@ -16,9 +16,15 @@ export default new VueRouter({
             component: resolve =>void(require(['./admin/Import.vue'], resolve))
         },
         {
+
+            name:'add',
+            path:'/add',
+            component: resolve =>void(require(['./admin/add.vue'], resolve))
+        },
+        {
             name: "query",
             path: '/query',
             component: resolve =>void(require(['./admin/Query.vue'], resolve))
-        },
+        }
     ]
 })
