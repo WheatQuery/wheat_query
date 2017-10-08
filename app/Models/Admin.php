@@ -119,6 +119,7 @@ class Admin
             'is_delete'=> 1,
             'delete_at'=>$time
         ]);
+        DB::table('wheat')->whereIn('id',$wheat_id)->decrement('use_times',-1);
         return $result ? 1 : 0;
     }
 }
