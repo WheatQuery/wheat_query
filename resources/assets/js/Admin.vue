@@ -8,7 +8,7 @@
                             小麦品种查询系统
                         </div>
                         <div class="user">
-                            <img :src="user.avatar">
+                            <img :src="'/img/admin/'+user.avatar">
                             <span class="info">
                                 {{user.name}}
                             </span>
@@ -166,10 +166,10 @@
     export default {
         data(){
             return {
-                user: [{
-                    name:'username',
-                    avarar:''
-                }],
+                user: {
+                    name:'user',
+                    avatar:'user.jpg'
+                },
                 isCollapse: false
             }
         },

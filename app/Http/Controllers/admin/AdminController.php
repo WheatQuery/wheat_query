@@ -114,7 +114,7 @@ class AdminController extends Controller
                 try {
                     $insert[$key]['wheat']['name'] = $value['原名'];
                     $insert[$key]['wheat']['child'] = $value['品种来源每个品种之间用英文分割开'];
-                    $insert[$key]['wheat']['verify_time'] = $value['审定年份'] == null ? '' : strtotime($value['审定年份']);
+                    $insert[$key]['wheat']['verify_time'] = $value['审定年份'] == null ? 0 : strtotime($value['审定年份']);
                     $insert[$key]['wheat']['use_times'] = $value['利用次数'] == null ? 0 : $value['利用次数'];
                     $insert[$key]['wheat']['code'] = $value['审定编号'] == null ? '' : $value['审定编号'];
                     $insert[$key]['wheat']['place'] = $value['申请单位'] == null ? '' : $value['申请单位'];
@@ -161,7 +161,7 @@ class AdminController extends Controller
         $result = Admin::wheat_import($insert);
         $error_data = array_merge_recursive($result['error'],$error);   //控制器中拦截的错误数据和模型层中错误数据
         $result_data['error'] = $error_data;
-        $result_data['count'] = $result['count'];
+        $result_data['count'] = $result['count'];   //成功导入的条数
         return $result_data;
     }
 
