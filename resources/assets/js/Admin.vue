@@ -1,3 +1,4 @@
+
 <template>
     <div style="height: 100%;background-color: white;">
         <table style="width: 100%;height: 100%;" cellpadding="0" cellspacing="0">
@@ -163,6 +164,7 @@
     }
 </style>
 <script type="text/ecmascript-6">
+
     export default {
         data(){
             return {
