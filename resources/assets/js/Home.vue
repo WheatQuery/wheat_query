@@ -25,6 +25,7 @@
                     <p><span>申请单位：</span><span> {{ details.wheat. place}} </span></p>
                     <p><span>育 种 者：</span><span> {{ details.wheat.breeder}} </span></p>
                     <p><span>品种来源：</span><span> {{ details.wheat.child}} </span></p>
+                    <p><span>利用次数：</span><span> {{ details.wheat.use_times}} </span></p>
                     <p><span>特性特征：</span></p>
                     <div class="nature">
                         <p><span>生态类型：</span><span> {{ details.nature.ecology_type}} </span></p>
