@@ -167,58 +167,58 @@
                     <el-input v-model="form.yellow"></el-input>
                 </el-form-item>
                 <el-form-item label="母穗数">
-                    <el-input v-model="form.panicle_num"></el-input>
+                        <el-input-number v-model="form.panicle_num" :min="0" :step="0.1"></el-input-number>
                 </el-form-item>
                 <el-form-item label="穗粒数">
-                    <el-input v-model="form.grain_num"></el-input>
+                        <el-input-number v-model="form.grain_num" :min="0" :step="0.1"></el-input-number>
                 </el-form-item>
                 <el-form-item label="千粒重">
-                    <el-input v-model="form.ths_weight"></el-input>
+                    <el-input-number v-model="form.ths_weight" :min="0" :step="0.1"></el-input-number>
                 </el-form-item>
                 <el-form-item label="抗病性">
                     <el-input v-model="form.resistance"></el-input>
                 </el-form-item>
                 <el-form-item label="蛋白质含量(两位小数百分比)">
-                    <el-input v-model="form.protein"></el-input>
+                    <el-input-number v-model="form.protein" :min="0" :step="0.01"></el-input-number>
                 </el-form-item>
                 <el-form-item label="容重(g/L)">
-                    <el-input v-model="form.volume"></el-input>
+                    <el-input-number v-model="form.volume" :min="0" :step="0.01"></el-input-number>
                 </el-form-item>
                 <el-form-item label="湿面筋含量（一位小数%">
-                    <el-input v-model="form.wet_gluten"></el-input>
+                    <el-input-number v-model="form.wet_gluten" :min="0" :step="0.1"></el-input-number>
                 </el-form-item>
                 <el-form-item label="降落数值">
-                    <el-input v-model="form.fall_num"></el-input>
+                    <el-input-number v-model="form.fall_num" :min="0" :step="1"></el-input-number>
                 </el-form-item>
                 <el-form-item label="沉淀指数（整数mL）">
-                    <el-input v-model="form.precipitate"></el-input>
+                    <el-input-number v-model="form.precipitate" :min="0" :step="1"></el-input-number>
                 </el-form-item>
                 <el-form-item label="吸水量（一位小数 mL/100g）">
-                    <el-input v-model="form.water_uptake"></el-input>
+                    <el-input-number v-model="form.water_uptake" :min="0" :step="0.1"></el-input-number>
                 </el-form-item>
                 <el-form-item label="形成时间（一位小数min）">
-                    <el-input v-model="form.format_time"></el-input>
+                    <el-input-number v-model="form.format_time" :min="0" :step="0.1"></el-input-number>
                 </el-form-item>
                 <el-form-item label="稳定时间（一位小数min）">
-                    <el-input v-model="form.steady_time"></el-input>
+                    <el-input-number v-model="form.steady_time" :min="0" :step="0.1"></el-input-number>
                 </el-form-item>
                 <el-form-item label="弱化度（整数F.U.）">
-                    <el-input v-model="form.weaken"></el-input>
+                    <el-input-number v-model="form.weaken" :min="0" :step="1"></el-input-number>
                 </el-form-item>
                 <el-form-item label="硬度（整数HI）">
-                    <el-input v-model="form.hardness"></el-input>
+                    <el-input-number v-model="form.hardness" :min="0" :step="1"></el-input-number>
                 </el-form-item>
                 <el-form-item label="白度（一位小数%）">
-                    <el-input v-model="form.white"></el-input>
+                    <el-input-number v-model="form.white" :min="0" :step="0.1"></el-input-number>
                 </el-form-item>
                 <el-form-item label="出粉率（一位小数%）">
-                    <el-input v-model="form.powder"></el-input>
+                    <el-input-number v-model="form.powder" :min="0" :step="0.1"></el-input-number>
                 </el-form-item>
                 <el-form-item label="产量表现">
-                    <el-input type="textarea" v-model="form.yield_result"></el-input>
+                    <el-input type="textarea" v-model="form.yield_result" style="height: 40px"></el-input>
                 </el-form-item>
                 <el-form-item label="栽培技术要点">
-                    <el-input type="textarea" v-model="form.tech_point"></el-input>
+                    <el-input type="textarea" v-model="form.tech_point"  style="height: 40px"></el-input>
                 </el-form-item>
 
 

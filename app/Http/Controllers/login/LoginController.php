@@ -35,7 +35,7 @@ class LoginController extends Controller
        }
         if(sizeof($data=$this->user->login($request))==1){
             Session::put('name',$data->name);
-            Session::put('userId',$request->input('phone'));
+            Session::put('userId',$data->id);
             return responseToJson(200,'success',1);
         }else{
             return responseToJson(404,'error',0);
