@@ -9,6 +9,8 @@ Route::group(['middleware'=>'certification'],function (){
     Route::post("/batch_delete", 'admin\AdminController@batch_delete');
     Route::post('/queryAll','admin\WheatController@queryAll');
     Route::post('/update','admin\WheatController@update');
+    Route::get('/getUser','login\LoginController@getUser');
+    Route::post('/rePass','login\LoginController@repassword');
 
     Route::get("/test", 'admin\AdminController@test');
 

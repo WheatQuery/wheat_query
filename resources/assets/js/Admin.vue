@@ -9,7 +9,7 @@
                             小麦品种查询系统
                         </div>
                         <div class="user">
-                            <img :src="user.avatar">
+                            <img :src="user.avarar">
                             <span class="info">
                                 {{user.name}}
                             </span>
@@ -28,6 +28,7 @@
                                     <router-link class="link-a" to="/import"><el-menu-item index="1-1">导入</el-menu-item></router-link>
                                     <router-link class="link-a" to="/add"><el-menu-item index="1-2">添加</el-menu-item></router-link>
                                     <router-link class="link-a" to="/query"><el-menu-item index="1-3">查看</el-menu-item></router-link>
+                                    <router-link class="link-a" to="/repass"><el-menu-item index="1-3">修改密码</el-menu-item></router-link>
                                 </el-submenu>
                             </el-menu>
                         </ul>
@@ -166,17 +167,36 @@
 <script type="text/ecmascript-6">
 
     export default {
+
         data(){
             return {
-                user: [{
+                user: {
                     name:'username',
                     avarar:''
-                }],
+                },
                 isCollapse: false
             }
         },
-        computed: {},
+        created(){
+            this.getUser()
+         },
+        computed: {
+
+        },
         methods: {
+
+            getUser(){
+                axios.get('/getUser',{}).then(
+                    res=>{
+                        console.log(res.data)
+                        if(res.data.code == 200){
+                            this.user.name = res.data.result.username
+                            this.user.avarar = res.data.result.avatar
+                        }
+
+                    }
+                )
+            },
             handleOpen(key, keyPath) {
                 console.log(key, keyPath);
             },

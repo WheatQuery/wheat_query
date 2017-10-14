@@ -14,7 +14,7 @@ function responseToJson($code = 0, $msg = '', $paras = null)
     // }
     return response()->json($res);
 }
-function get_session_user_id()
+function get_session_user_id($key)
 {
-    return empty(session('id')) ? session('id') : 0;
+    return empty(session($key)) ? session($key) : 0;
 }

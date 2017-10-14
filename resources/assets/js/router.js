@@ -25,6 +25,12 @@ export default new VueRouter({
             name: "query",
             path: '/query',
             component: resolve =>void(require(['./admin/Query.vue'], resolve))
-        }
+        },
+        {
+
+            name:'repass',
+            path:'/repass',
+            component: resolve =>void(require(['./admin/repassword.vue'], resolve))
+        },
     ]
 })
