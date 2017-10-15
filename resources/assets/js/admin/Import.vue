@@ -61,6 +61,9 @@
     export default {
         data() {
             return {
+                name: 'wangqh',
+                a: 1,
+                b: 2,
                 import_loading: false,
                 csrf_token: {
                     _token: Laravel.csrfToken
@@ -96,7 +99,7 @@
             },
         },
         mounted() {
-
+            
         }
     }
 </script>

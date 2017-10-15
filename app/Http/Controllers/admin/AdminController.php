@@ -162,8 +162,8 @@ class AdminController extends Controller
     }
     public function test()
     {
-        /*$str1 = '[\u4E00-\u9FA5A-Za-z0-9()_-x/]+[,]+$';
-        dump(preg_match($str1,'hell123,nihao456,(不好/123),'));*/
-        $result = Admin::get_times();
+        /*$output = exec('F:/test.py');
+        dump($output);*/
+
     }
 }
