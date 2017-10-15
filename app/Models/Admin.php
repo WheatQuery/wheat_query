@@ -49,6 +49,7 @@ class Admin
                 $error_data[] = array_merge_recursive($value['wheat'],$value['attr']);
             }
         }
+        self::get_times();
         $data['error'] = $error_data;
         $data['count'] = $count;
         return $data;
@@ -72,7 +73,6 @@ class Admin
             }
             //统计数据中小麦品种出现的次数
             $result = DB::table('wheat')->where('id','=',$value1->id)->update(['use_times'=>$count]);
-            dump($result);
         }
     }
     /**

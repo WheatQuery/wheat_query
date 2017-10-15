@@ -61,48 +61,7 @@ class AdminController extends Controller
             }
         }
     }
-/*array:1 [▼
-    0 => array:38 [▼
-    "原名" => "开麦22"
-    "品种来源每个品种之间用英文分割开" => "周麦18,百农AK58,"
-    "审定年份" => Carbon {#508 ▶}
-    "利用次数" => 3.0
-    "审定编号" => "豫审麦2014017"
-    "申请单位" => "开封市农林科学研究院"
-    "育种者" => "牛本永,赵国建,宋晓,吴欣,李绍伟,"
-    "生态类型" => "属半冬性中熟品种，全生育期224.3～233.7天。"
-    "苗性" => "幼苗半直立，苗期叶片细长，叶色浓绿，冬季抗寒性较好；"
-    "分蘖特性" => "分蘖力强，成穗率中等，春季起身慢，两极分化快，"
-    "株型" => "株型松紧适中"
-    "穗下节长度" => "穗下节长"
-    "旗叶特征" => "旗叶略长，上举，干尖，"
-    "穗层" => "穗层整齐"
-    "株高" => "株高75～77cm"
-    "抗倒特性" => "秆弹性较好，抗倒伏能力强"
-    "穗型" => "纺锤型穗，籽粒角质，饱满度好；"
-    "根系活力" => "根系活力好，叶功能期长，耐后期高温，灌浆速度快"
-    "落黄" => "成熟落黄好"
-    "母穗数" => "35.3～39.3"
-    "穗粒数" => "32～34.0"
-    "千粒重" => "43.9～48.3"
-    "抗病性" => "中抗条锈病,中感叶锈病,中感白粉病,中感纹枯病,高感赤霉病,"
-    "蛋白质含量" => 16.63
-    "容重" => 803.0
-    "湿面筋含量" => 36.2
-    "降落数值" => 434.0
-    "沉淀指数" => 71.0
-    "吸水量" => 61.9
-    "形成时间" => 4.8
-    "稳定时间" => 4.2
-    "弱化度" => 98.0
-    "硬度" => 64.0
-    "白度" => 73.3
-    "出粉率" => 71.40000000000001
-    "产量表现" => null
-    "栽培技术要点" => null
-    "审定意见" => null
-    ]
-]*/
+
     public function read_excel($filename)
     {
         $filePath = storage_path() . '/app/import/' . iconv('UTF-8', 'GBK', $filename) . '.xlsx';
@@ -114,7 +73,7 @@ class AdminController extends Controller
                 try {
                     $insert[$key]['wheat']['name'] = $value['原名'];
                     $insert[$key]['wheat']['child'] = $value['品种来源每个品种之间用英文分割开'];
-                    $insert[$key]['wheat']['verify_time'] = $value['审定年份'] == null ? '' : strtotime($value['审定年份']);
+                    $insert[$key]['wheat']['verify_time'] = $value['审定年份'] == null ? 0 : strtotime($value['审定年份']);
                     $insert[$key]['wheat']['use_times'] = $value['利用次数'] == null ? 0 : $value['利用次数'];
                     $insert[$key]['wheat']['code'] = $value['审定编号'] == null ? '' : $value['审定编号'];
                     $insert[$key]['wheat']['place'] = $value['申请单位'] == null ? '' : $value['申请单位'];
@@ -133,7 +92,7 @@ class AdminController extends Controller
                     $insert[$key]['attr']['panicle_type'] = $value['穗型'] == null ? '' : $value['穗型'];
                     $insert[$key]['attr']['root_activ'] = $value['根系活力'] == null ? '' : $value['根系活力'];
                     $insert[$key]['attr']['yellow'] = $value['落黄'] == null ? '' : $value['落黄'];
-                    $insert[$key]['attr']['panicle_num'] = $value['母穗数'] == null ? 0 : $value['母穗数'];
+                    $insert[$key]['attr']['panicle_num'] = $value['亩穗数'] == null ? 0 : $value['亩穗数'];
                     $insert[$key]['attr']['grain_num'] = $value['穗粒数'] == null ? 0 : $value['穗粒数'];
                     $insert[$key]['attr']['ths_weight'] = $value['千粒重'] == null ? 0 : $value['千粒重'];
                     $insert[$key]['attr']['resistance'] = $value['抗病性'] == null ? '' : $value['抗病性'];
@@ -159,9 +118,12 @@ class AdminController extends Controller
             }
         }
         $result = Admin::wheat_import($insert);
-        $error_data = array_merge_recursive($result['error'],$error);   //控制器中拦截的错误数据和模型层中错误数据
+        $error_data = [];
+        if($result['error'] != [] && $error !=[]){
+            $error_data = array_merge_recursive($result['error'],$error);   //控制器中拦截的错误数据和模型层中错误数据
+        }
         $result_data['error'] = $error_data;
-        $result_data['count'] = $result['count'];
+        $result_data['count'] = $result['count'];   //成功导入的条数
         return $result_data;
     }
 
