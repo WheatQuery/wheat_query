@@ -53,6 +53,9 @@
                     ppap: [
                         { validator: checknull, trigger: 'blur' }
                     ],
+                    checknull1:[
+                        { validator: checknull1, trigger: 'blur' }
+                    ],
                     checking:[
                         {   validator:checking,trigger: 'blur'  }
                     ]
