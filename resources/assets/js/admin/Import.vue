@@ -61,9 +61,6 @@
     export default {
         data() {
             return {
-                name: 'wangqh',
-                a: 1,
-                b: 2,
                 import_loading: false,
                 csrf_token: {
                     _token: Laravel.csrfToken
@@ -81,6 +78,7 @@
                     self.$message({
                         message: "成功导入"+data.result.count+"条记录",
                         type: "success"
+
                     });
                     setTimeout(function(){
                         location.href="/#/user/student";
@@ -99,7 +97,7 @@
             },
         },
         mounted() {
-            
+
         }
     }
 </script>
