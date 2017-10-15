@@ -14,6 +14,7 @@ use App\Models\wheatAttrModel;
 use App\Models\WheatModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 
 
@@ -36,6 +37,15 @@ class WheatController extends Controller
 
     public function add(Request $request)
     {
+
+        $validator = Validator::make($request->all()['data'],['name'=>'bail|required','child'=>'bail|required|format','code'=>'bail|required','breeder'=>'bail|required','place'=>'bail|required','date1'=>'bail|required'],
+            ['required'=>':attribute为空'],
+            ['name'=>'品种名称','child'=>'子产品','code'=>'审定编号','breeder'=>'育种者','place'=>'育种地点','date1'=>'审核日期','child'=>'子产品']);
+
+        if($validator->fails()){
+            return responseToJson(500,'error',$validator->errors()->all());
+        }
+
         DB::beginTransaction();
         try {
             $this->wheat->addWheat($request);
@@ -66,6 +76,14 @@ class WheatController extends Controller
     }
 
     public function update(Request $request){
+        $validator = Validator::make($request->all()['data'],['name'=>'bail|required','child'=>'bail|required|format','code'=>'bail|required','breeder'=>'bail|required','place'=>'bail|required','date1'=>'bail|required'],
+            ['required'=>':attribute为空'],
+            ['name'=>'品种名称','child'=>'子产品','code'=>'审定编号','breeder'=>'育种者','place'=>'育种地点','date1'=>'审核日期','child'=>'子产品']);
+
+        if($validator->fails()){
+            return responseToJson(500,'error',$validator->errors()->all());
+        }
+
         DB::beginTransaction();
         try {
             $this->wheat->updates($request);

@@ -122,19 +122,19 @@
     </style>
     <script>
         function login() {
-            if($("#phone").val() == ""){
-                $("#phoneError").text("邮箱为空")
-                $("#phone").css({"border":"1px solid red"})
-                return;
-            }else if(!$("#phone").val().match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)){
-                $("#phoneError").text("邮箱格式错误")
-                $("#phone").css({"border":"1px solid red"})
-                return;
-            }else if($("#password").val() == ""){
-                $("#passwordError").text("密码为空")
-                $("#password").css({"border":"1px solid red"})
-                return;
-            }
+//            if($("#phone").val() == ""){
+//                $("#phoneError").text("邮箱为空")
+//                $("#phone").css({"border":"1px solid red"})
+//                return;
+//            }else if(!$("#phone").val().match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)){
+//                $("#phoneError").text("邮箱格式错误")
+//                $("#phone").css({"border":"1px solid red"})
+//                return;
+//            }else if($("#password").val() == ""){
+//                $("#passwordError").text("密码为空")
+//                $("#password").css({"border":"1px solid red"})
+//                return;
+//            }
 
 
             $.ajax({
@@ -166,5 +166,11 @@
 
             })
         }
+
+        $(document).keydown(function(event){
+            　　　if(event.keyCode == 13){
+                　　　　　　login();
+                　　　}
+            　　});
     </script>
 @endsection

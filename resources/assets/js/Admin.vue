@@ -1,4 +1,3 @@
-
 <template>
     <div style="height: 100%;background-color: white;">
         <table style="width: 100%;height: 100%;" cellpadding="0" cellspacing="0">
@@ -9,7 +8,9 @@
                             小麦品种查询系统
                         </div>
                         <div class="user">
-                            <img :src="'/img/admin/'+user.avatar">
+
+                            <img :src="'/img/admin/'+user.avarar">
+
                             <span class="info">
                                 {{user.name}}
                             </span>
@@ -21,13 +22,25 @@
                             <li>
                                 <router-link to="admin"><i class="ion-ios-folder"></i>管理</router-link>
                             </li>-->
-                            <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" theme="dark" @close="handleClose">
-                                <router-link class="link-a" to="/"><el-menu-item index="3"><i class="el-icon-menu"></i>查询</el-menu-item></router-link>
+                            <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" theme="dark"
+                                     @close="handleClose">
+                                <router-link class="link-a" to="/">
+                                    <el-menu-item index="3"><i class="el-icon-menu"></i>查询</el-menu-item>
+                                </router-link>
                                 <el-submenu index="1">
                                     <template slot="title"><i class="el-icon-setting"></i>管理</template>
-                                    <router-link class="link-a" to="/import"><el-menu-item index="1-1">导入</el-menu-item></router-link>
-                                    <router-link class="link-a" to="/add"><el-menu-item index="1-2">添加</el-menu-item></router-link>
-                                    <router-link class="link-a" to="/query"><el-menu-item index="1-3">查看</el-menu-item></router-link>
+                                    <router-link class="link-a" to="/import">
+                                        <el-menu-item index="1-1">导入</el-menu-item>
+                                    </router-link>
+                                    <router-link class="link-a" to="/add">
+                                        <el-menu-item index="1-2">添加</el-menu-item>
+                                    </router-link>
+                                    <router-link class="link-a" to="/query">
+                                        <el-menu-item index="1-3">查看</el-menu-item>
+                                    </router-link>
+                                    <router-link class="link-a" to="/repass">
+                                        <el-menu-item index="1-3">修改密码</el-menu-item>
+                                    </router-link>
                                 </el-submenu>
                             </el-menu>
                         </ul>
@@ -47,13 +60,15 @@
     .sidebar {
         display: table-cell;
     }
+
     img {
         max-width: 100%;
     }
-     .el-menu-vertical-demo:not(.el-menu--collapse) {
-         width: 200px;
-         min-height: 400px;
-     }
+
+    .el-menu-vertical-demo:not(.el-menu--collapse) {
+        width: 200px;
+        min-height: 400px;
+    }
 </style>
 <style scoped>
     .user {
@@ -159,31 +174,49 @@
     div.logout > a:hover, .info:hover {
         background-color: #1b6d85;
     }
-    .link-a{
+
+    .link-a {
         text-decoration: none;
     }
 </style>
 <script type="text/ecmascript-6">
 
     export default {
-        data(){
+
+        data() {
             return {
                 user: {
-                    name:'user',
-                    avatar:'user.jpg'
+                    name: 'username',
+                    avarar: ''
                 },
                 isCollapse: false
             }
         },
+        created() {
+            this.getUser()
+        },
         computed: {},
         methods: {
+
+            getUser() {
+                axios.get('/getUser', {}).then(
+                    res => {
+                        console.log(res.data)
+                        if (res.data.code == 200) {
+                            this.user.name = res.data.result.username
+                            this.user.avarar = res.data.result.avatar
+                        }
+
+                    }
+                )
+            },
             handleOpen(key, keyPath) {
                 console.log(key, keyPath);
             },
             handleClose(key, keyPath) {
                 console.log(key, keyPath);
             },
-            get () {
+            get() {
                 /*var self = this
                 axios.post('info/get', {}).then(function (response) {
                     self.user = response.data.result
