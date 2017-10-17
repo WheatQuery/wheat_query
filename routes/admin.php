@@ -13,5 +13,6 @@ Route::group(['middleware'=>'certification'],function (){
     Route::post('/rePass','login\LoginController@repassword');
 
     Route::get("/test", 'admin\AdminController@test');
+    Route::get("/notice", 'admin\AdminController@notice');
 
 });

@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendReminderEmail;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -164,6 +165,8 @@ class AdminController extends Controller
     {
         /*$output = exec('F:/test.py');
         dump($output);*/
-
+        //启动队列的后台方式
+        //  nohup php martisan queue:work >> /dev/null &
+       //   ps auxlgrep queue:work
     }
 }
